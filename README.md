@@ -3,9 +3,10 @@
 A tiny macOS menu bar app that ignores every key press while the screen keeps playing. Made for cats who walk across laptops during cat videos.
 
 - Blocks all keys, including Space, Escape, media/volume/brightness keys, Caps Lock, fn/Globe and ⌘Tab
-- Leaves the screen, trackpad and mouse working, so you unlock it from the menu bar
+- Optional **Trackpad Lock** that ignores clicks, scrolling, gestures and pointer movement
+- A keyboard shortcut (⌃⌥⌘L by default, change it in **Lock Shortcut…**) locks and unlocks from anywhere. It's the way out when the trackpad is locked
 - Native look: a Wi-Fi-style switch in the menu, and a glass HUD when you lock or unlock
-- About 450 KB on disk, ~14 MB of memory, 0% CPU when idle; it only watches the keyboard while locked
+- About 450 KB on disk, ~14 MB of memory, 0% CPU when idle; it only watches input while locked
 - Unlocks automatically when the Mac locks, sleeps or starts the screensaver, so you can always type your password
 
 ## Install
@@ -22,7 +23,7 @@ The first time you turn the lock on, macOS asks you to allow **Accessibility** a
 
 ## How it works
 
-A single Swift file (`Sources/main.swift`) sets up a `CGEventTap` at the HID level while the lock is on. The tap drops key-down, key-up and modifier events, plus the system-defined events that media keys send. Turning the lock off removes the tap completely.
+A single Swift file (`Sources/main.swift`) sets up a `CGEventTap` at the HID level while a lock is on. The tap drops key-down, key-up and modifier events, plus the system-defined events that media keys send. With Trackpad Lock on, it also drops mouse, scroll and gesture events and holds the cursor in place. Turning everything off removes the tap completely. While nothing is locked, the shortcut is a regular system hotkey, which costs nothing.
 
 It can't block the power / Touch ID button, which the system handles itself.
 
